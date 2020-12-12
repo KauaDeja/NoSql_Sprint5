@@ -7,3 +7,4 @@
 #### - npm i firebase
 #### - npm i reactfire
 #### - npm i react-bootstrap
+#### - npm i bootstrap
