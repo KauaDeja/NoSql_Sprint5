@@ -8,3 +8,6 @@
 #### - npm i reactfire
 #### - npm i react-bootstrap
 #### - npm i bootstrap
+
+### Para Criar o projeto basta dar o seguinte comando:
+##### https://firebase.google.com/docs/auth?hl=pt-br
