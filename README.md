@@ -6,3 +6,4 @@
 ### Foram usadas as seguintes bibliotecas:
 #### - npm i firebase
 #### - npm i reactfire
+#### - npm i react-bootstrap
