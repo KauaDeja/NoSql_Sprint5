@@ -16,5 +16,7 @@ import firebase from 'firebase';
   // Sempre que eu quiser trabalhar com collections usar o firestore
   // exporta para ser utilizado nos components
   export const db = app.firestore();
+  // Quando eu quiser trabalhar com upload de imagens, por exemplo, usar o storage
+  export const storage = app.storage();
   
   export default firebaseConfig;

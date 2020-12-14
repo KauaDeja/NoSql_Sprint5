@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Form, Button, Table, Card } from 'react-bootstrap';
-import { db } from '../../utils/firebaseConfig';
+import { db, storage } from '../../utils/firebaseConfig';
+import FileUploader from 'react-firebase-file-uploader';
 
 const EventosPage = () => {
     // Criar os estados a serem utilizados
     const [id, setId] = useState(0);
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
+    const [urlImagem, setUrlImagem] = useState('');
 
     const [eventos, setEventos] = useState([]);
 
@@ -26,7 +28,8 @@ const EventosPage = () => {
                         return {
                             id: doc.id,
                             nome: doc.data().nome,
-                            descricao: doc.data().descricao
+                            descricao: doc.data().descricao,
+                            urlImagem : doc.data().urlImagem
                         }
                     })
                     // Define as informações encontradas
@@ -47,7 +50,8 @@ const EventosPage = () => {
 
         const evento = {
             nome: nome,
-            descricao: descricao
+            descricao: descricao,
+            urlImagem : urlImagem
         }
         // Se ele n existir, ou seja, seu id for = 0, adiciona um novo evento
         if (id === 0) {
@@ -73,6 +77,7 @@ const EventosPage = () => {
             setId(0);
             setNome('');
             setDescricao('');
+            setUrlImagem('');
         }
     }
 
@@ -99,10 +104,26 @@ const EventosPage = () => {
                     setId(doc.id);
                     setNome(doc.data().nome);
                     setDescricao(doc.data().descricao);
+                    setUrlImagem(doc.data().urlImagem);
                 });
         } catch (error) {
             console.error(error);
         }
+    }
+
+    const handleUploadError = error =>{
+        console.error(error);
+    }
+
+    const handleUploadSuccess = filename =>{
+        console.log('Sucesso upload: '+ filename);
+
+        storage 
+            .ref('imagens')
+            .child(filename)
+            .getDownloadURL()
+            .then(url =>setUrlImagem(url))
+            .catch(error =>console.error(error))
     }
 
     return (
@@ -113,6 +134,21 @@ const EventosPage = () => {
                 <Card>
                     <Card.Body>
                         <Form onSubmit={event => salvar(event)}>
+                            <Form.Group>
+                                {urlImagem && <img src={urlImagem} style={{widht:'200px'}} />}
+                                <label style={{backgroundColor: 'steelblue', color: 'white', padding: 10, borderRadius:4,cursor:'pointer'}}>
+                                    Selecione a Imagem
+                                <FileUploader
+                                    hidden
+                                    accept="image/*"
+                                    name="urlImagem"
+                                    randomizeFilename
+                                    storageRef={storage.ref('imagens')}
+                                    onUploadError={handleUploadError}
+                                    onUploadSuccess={handleUploadSuccess}
+                                />
+                                </label>
+                            </Form.Group>
                             <Form.Group controlId="formBasicNome">
                                 <Form.Label>Nome</Form.Label>
                                 <Form.Control type="text" value={nome} onChange={event => setNome(event.target.value)} placeholder="Nome do evento"></Form.Control>
@@ -129,6 +165,7 @@ const EventosPage = () => {
                 <Table striped bordered hover>
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Nome</th>
                             <th>Descrição</th>
                             <th>Ações</th>
@@ -139,6 +176,7 @@ const EventosPage = () => {
                             eventos.map((item, index) => {
                                 return (
                                     <tr key={index}>
+                                        <td><img src={item.urlImagem}  style={{widht:'100px'}}/></td>
                                         <td>{item.nome}</td>
                                         <td>{item.descricao}</td>
                                         <td>
