@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Login from './pages/login';
 import Register from './pages/register';
+import EventosPage from './pages/eventos';
 import reportWebVitals from './reportWebVitals';
 
 // precisamos implementar esse fire base em todo o projeto
@@ -16,7 +17,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 ReactDOM.render(
   <React.StrictMode>
    <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-      <Register />
+      <EventosPage />
    </FirebaseAppProvider>
   </React.StrictMode>,
   document.getElementById('root')

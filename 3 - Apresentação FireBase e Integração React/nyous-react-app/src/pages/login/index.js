@@ -10,6 +10,10 @@ import './index.css';
 
 
 const Login = () => {
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+
+
     // Para usar o hooks devemos criar a seguinte constante
     const firebase = useFirebaseApp();
 
@@ -30,9 +34,6 @@ const Login = () => {
                 console.error(error);
             })
     }
-
-    const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
 
     return (
         <Container className='form-height'>

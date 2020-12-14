@@ -11,6 +11,10 @@ import firebase from 'firebase';
   };
 
   // iniciar Firebase
-  firebase.initializeApp(firebaseConfig);
+  const app = firebase.initializeApp(firebaseConfig);
 
+  // Sempre que eu quiser trabalhar com collections usar o firestore
+  // exporta para ser utilizado nos components
+  export const db = app.firestore();
+  
   export default firebaseConfig;
