@@ -8,7 +8,7 @@
 #### - npm i reactfire
 #### - npm i react-bootstrap
 #### - npm i bootstrap
-####  - npm i react-firebase-file-uploader
+####  - npm i react-firebase-file-uploader@2.4.3
 
 ### Documentações utilizadas:
 ##### https://firebase.google.com/docs/auth?hl=pt-br
